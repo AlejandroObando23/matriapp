@@ -1,0 +1,187 @@
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+import 'package:matri_app/SecondPage.dart';
+
+void main() {
+
+  runApp( MyApp());
+}
+
+class MyApp extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      initialRoute: "/",
+      routes: {
+        "/":(context)=>FirstPage(),
+        "/secondPage":(context)=>Secondpage()
+      
+      },
+    );
+  }
+}
+
+class FirstPage extends StatelessWidget{
+  
+   @override
+  Widget build(BuildContext context) {
+   return Scaffold(
+    appBar: AppBar(
+
+          backgroundColor: Colors.grey,
+          titleTextStyle: const TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+          ),
+          centerTitle: true,
+          title: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            
+            children: [
+              Align(child: Center()),
+              Text(
+                "Matriz Developer",
+                textAlign: TextAlign.center,
+              ),
+
+            
+          ],),
+        ),
+body: InputExample(),
+      );
+  }
+}
+  
+
+class InputExample extends StatefulWidget {
+  @override
+  _InputExampleState createState() => _InputExampleState();
+}
+
+class _InputExampleState extends State<InputExample> {
+  final TextEditingController _controller = TextEditingController();
+  final TextEditingController _controllertwo = TextEditingController();
+  final TextEditingController _controllertree = TextEditingController();
+  String _displayText = "";
+  String _displayTexttwo ="";
+  String _displayTextresult="";
+  String _valorbotton="";
+  int _value=1;
+
+  
+
+  void _saveText() {
+    setState(() {
+      _valorbotton=_controllertree.text;
+      _displayText = _controller.text;
+      _displayTexttwo= _controllertwo.text;
+
+      
+      int? _numberone = int.parse(_displayText);
+      int? _numbertwo = int.parse(_displayTexttwo);
+      int? _resultado=0;
+      _resultado= (_numberone*_numbertwo) ;
+      _displayTextresult=_resultado.toString();
+      _valorbotton=_value.toString();
+       // Guardar el texto ingresado
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text("Ingrese la Columna"),
+          TextField(
+            controller: _controller,
+            decoration: InputDecoration(
+              labelText: "Columna",
+              border: OutlineInputBorder(),
+            ),
+          ),
+          Text("Ingrese la fila"),
+          TextField(
+            controller: _controllertwo,
+            decoration: InputDecoration(
+              labelText: "Fila",
+              border: OutlineInputBorder(),
+            ),
+          ),
+          Text("Cuantas Matrices solicita"),
+          Row(children: [
+             Radio(
+            value: 1,
+            groupValue: _value,
+             onChanged: ( value) {
+              setState(() {
+                _value =value!;
+              });
+               },
+             ),
+             SizedBox(width: 10.0,),
+             Text("1")
+         
+
+          ],),
+
+                    Row(children: [
+             Radio(
+            value: 2,
+            groupValue: _value,
+             onChanged: ( value) {
+                              setState(() {
+                _value =value!;
+              });
+               },
+
+  
+             ),
+             SizedBox(width: 10.0,),
+             Text("2")
+         
+
+          ],),
+        
+                    
+
+
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: _saveText, // Acción al presionar el botón
+            child: Text("Guardar"),
+            
+          ),
+          SizedBox(height: 20),
+          Text(
+            "Texto Guardado:",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          Text(
+            _displayTextresult,
+            style: TextStyle(fontSize: 16, color: Colors.blue),
+          ),
+          Text(
+            _valorbotton,
+            style: TextStyle(fontSize: 16, color: Colors.blue),
+          ),
+        
+         ElevatedButton(child: Text("To page 2"),
+    onPressed: (){
+       Navigator.pushNamed(context, "/secondPage");
+    }),
+
+        
+        
+        ],
+      ),
+    );
+  }
+}
+
+
